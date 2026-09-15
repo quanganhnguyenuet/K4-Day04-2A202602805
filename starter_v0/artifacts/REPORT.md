@@ -3,10 +3,10 @@
 ## Team
 
 - **Team:** [Btenttion]
-- **Members:** [TODO: điền đầy đủ họ tên và MSSV từ `TEAMMATES.md`]
+- **Members:** [`TEAMMATES.md`]
 - **Provider/model:** OpenAI / `gpt-4o-mini`
 - **Repository:** https://github.com/quanganhnguyenuet/K4-Day04-2A202602805
-- **Final artifact:** `v4+p4980172b9845+tc0ff7714a326`
+
 
 # PHẦN A — Giới thiệu agent
 
@@ -81,9 +81,6 @@ Final v4 chạy cùng artifact hash trên bốn suite:
 | Extension | 10/10 | 10 | 0 | `runs/v4_B_extension_openai_20260915T002731522569.json` |
 | Adversarial | 12/12 | 12 | 0 | `runs/v4_B_adversarial_openai_20260915T002734445196.json` |
 
-> Checkout còn lại: file run v0 và v2 không còn trong working copy; nhóm cần
-> phục hồi từ máy/branch của người chạy hoặc chạy lại đúng artifact trước khi
-> nộp. Các run v4 và transcript cũng cần được đưa vào Git.
 
 ## B2. Failure analysis
 
