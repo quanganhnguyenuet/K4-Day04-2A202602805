@@ -239,12 +239,12 @@ người khác viết thay. Các commit có thể dùng làm evidence ban đầu
 
 Mỗi thành viên sao chép và tự hoàn thành mẫu sau:
 
-### [TODO: Nguyễn Vũ Quang Anh] — [TODO: 2A202602805]
+### Nguyễn Vũ Quang Anh — 2A202602805
 
 - **Vai trò/phần việc được nhận:**Leader điều phối hoạt động nhóm và hoàn thiện tools và system prompt
 - **Những gì tôi đã thay đổi trong repo chung:**Sửa file run_eval để có thể tự log kết quả, quản lý commit, git của cả nhóm và làm version cuối của artifact
-- **File hoặc artifact liên quan:**các file tools.md, system_prompt.md
-- **Commit hash hoặc pull request:**`b565645` — cập nhật final system prompt, tools và version log.
+- **File hoặc artifact liên quan:**các file `tools.md`, `system_prompt.md`, `run_eval`
+- **Commit hash hoặc pull request:**`b565645` — cập nhật final system prompt, tools và version log
 - **Một quyết định kỹ thuật tôi đã đưa ra và lý do:** Tôi quyết định tách các quy tắc mang tính toàn cục như không tự đoán identifier, xử lý intent mới nhất và kiểm tra confirmation vào `system_prompt.md`; còn phạm vi sử dụng, arguments và ranh giới dữ liệu của từng tool được mô tả trong `tools.yaml`. Cách tách này giúp trách nhiệm của hai artifact rõ ràng và dễ xác định nơi cần sửa khi một eval case thất bại.
 
 - **Khó khăn tôi gặp và cách tôi xử lý:** Khó khăn lớn nhất là một thay đổi giúp adversarial cases có thể làm regression các base cases. 
@@ -266,7 +266,7 @@ Mỗi thành viên sao chép và tự hoàn thành mẫu sau:
 
 - **Vai trò/phần việc được nhận:** Quản lý và chuẩn hóa các phiên bản `system_prompt.md` (v1, v2, v3), xử lý confirmation boundary, multi-turn context và các ranh giới bảo mật.
 - **Những gì tôi đã thay đổi trong repo chung:** Xây dựng các phiên bản `system_prompt_v1.md`, `system_prompt_v2.md`, `system_prompt_v3.md` gắn liền với hypothesis thực nghiệm; bổ sung quy tắc bám sát latest user intent trong hội thoại đa lượt và thiết lập guardrail strict enum, từ chối credentials. chỉnh `tools-v2c.yaml`, tạo các bộ eval mở rộng phục vụ Red Teaming để test các trường hợp unsafe khác.
-- **File hoặc artifact liên quan:** `system_prompt_v1.md`, `system_prompt_v2.md`, `system_prompt_v3.md`, `tools-v2c.yaml`
+- **File hoặc artifact liên quan:** `system_prompt_v1.md`, `system_prompt_v2.md`, `system_prompt_v3.md`, `tools-v2.yaml`
 - **Commit hash hoặc pull request:** `827454e`, `308bbac`, `46ac99b`, `1fb23ed`
 - **Một quyết định kỹ thuật tôi đã đưa ra và lý do:** Quyết định tách biệt giả thuyết giữa các version (v1 thuần về confirmation, v2/v3 về multi-turn và enum guardrail), giúp đánh giá đúng sự cải thiện của từng thay đổi.
 - **Khó khăn tôi gặp và cách tôi xử lý:** khi gặp dịch vụ ngoài danh mục (Kubernetes) model tự ánh xạ sang `sso` (case B03) và bị lừa bởi confirmation cũ khi đổi payload. Tôi xử lý bằng cách cô lập strict enum dịch vụ dùng chung và bắt buộc invalidate confirmation cũ khi tham số thay đổi.
@@ -276,25 +276,13 @@ Mỗi thành viên sao chép và tự hoàn thành mẫu sau:
 - **Khó khăn tôi gặp và cách tôi xử lý:** Khó khăn lớn nhất là một thay đổi giúp adversarial cases có thể làm regression các base cases. 
 - **Điều tôi học được từ phần việc này:**Tôi học được rằng tool name, description và JSON schema đều là một phần của prompt. Điểm automatic PASS cũng chưa đủ để kết luận hệ thống hoạt động đúng, vì tool vẫn có thể trả lỗi hoặc tạo side effect ngoài ý muốn. Do đó cần kiểm tra cả metric, trace, tool results và filesystem.
 - **Nếu làm lại, tôi sẽ cải thiện điều gì:** Tôi sẽ thiết kế hypothesis cụ thể hơn cho từng version, chỉ thay đổi một nhóm quy tắc trong mỗi vòng và lưu đầy đủ run evidence ngay từ đầu. 
-
-### Vũ Quốc Bảo — 2A202602829
-
-- **Vai trò/phần việc được nhận:** Thiết kế eval_group.json và xây dựng giao diện Live Chat Streamlit
-- **Những gì tôi đã thay đổi trong repo chung:** Viết 10 case eval nhóm (5 single + 5 multi-turn); xây `app.py` dùng chung `run_model_tool_loop` với CLI/eval; bổ sung transcript evidence.
-- **File hoặc artifact liên quan:** `data/eval_group.json`, `starter_v0/app.py`, `starter_v0/.streamlit/config.toml`, `starter_v0/transcripts/ui-test_openai_20260914T235916689384.transcript.json`
-- **Commit hash hoặc pull request:** `6108da8`, `ee36f60`
-- **Một quyết định kỹ thuật tôi đã đưa ra và lý do:** Tách mỗi case eval để kiểm tra đúng một kỹ năng; UI dùng chung agent loop với CLI để hành vi nhất quán.
-- **Khó khăn tôi gặp và cách tôi xử lý:** UI hiện nguyên JSON thay vì câu trả lời tự nhiên — sửa bằng cách parse field `reply` để hiển thị; phát hiện model không gọi tool `clarify` khi cần xác nhận, dùng lỗi đó viết thêm case G05/G09.
-- **Điều tôi học được từ phần việc này:** Case eval hợp lý trên giấy vẫn có thể lộ lỗi thật khi chạy qua UI thực tế; transcript là bằng chứng cần thiết bên cạnh điểm số tự động.
-- **Nếu làm lại, tôi sẽ cải thiện điều gì:** Thêm chế độ chọn case từ file eval ngay trong UI, tự hiện `expect.tool_calls` để đối chiếu nhanh hơn.
-
 ### Mai Phan Anh Tùng Tùng — 2A202602980
 
 * **Vai trò/phần việc được nhận:** Hoàn thiện và cải thiện phần khai báo tool trong `tools.yaml`, đặc biệt là description, parameters, schema và các ràng buộc khi sử dụng tool.
 
 * **Những gì tôi đã thay đổi trong repo chung:** Chỉnh sửa `tools.yaml` qua nhiều version để làm rõ cách sử dụng từng tool, bổ sung các điều kiện về missing information, routing giữa các tool, cách truyền identifier và ranh giới giữa các tool read-only với các tool có side effect. Đặc biệt, tôi hoàn thiện các mô tả cho `clarify`, `inspect_device`, `lookup_user`, `search_device_info`, `policy` và `create_ticket` để model có đủ thông tin lựa chọn và gọi tool đúng ngữ cảnh.
 
-* **File hoặc artifact liên quan:** `starter_v0/artifacts/tools.yaml` và các version trung gian của `tools.yaml` (`tools_v1.yaml`, `tools_v2.yaml`, `tools_v3.yaml`).
+* **File hoặc artifact liên quan:**Các version trung gian của `tools.yaml` (`tools_v1.yaml`, `tools_v3.yaml`).
 
 * **Commit hash hoặc pull request:** `69efdba`,`18904e2`— cập nhật tool declaration và version log.
 
